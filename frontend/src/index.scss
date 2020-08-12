@@ -1,0 +1,92 @@
+@import "utility";
+:root {
+	--main-color: #fff;
+	--secondary-color: #333;
+	--text-color: #777;
+	--gray-color-light1: #faf9f9;
+
+	--max-width: 120rem;
+}
+html {
+	font-size: 62.5%;
+	@include respond(big-desktop) {
+		font-size: 75%;
+	}
+	@include respond(tab-land) {
+		font-size: 56.25%;
+	}
+	@include respond(tab-port) {
+		font-size: 50%;
+	}
+	@include respond(phone) {
+		font-size: 35%;
+	}
+}
+body {
+	font-family: "Lato", sans-serif;
+	line-height: 1.5;
+	background-color: var(--main-color);
+}
+img {
+	width: 100%;
+	height: 100%;
+}
+a {
+	text-decoration: none;
+	color: var(--text-color);
+}
+h1 {
+	font-size: 3.2rem;
+	color: var(--secondary-color);
+}
+h2 {
+	font-size: 1.8rem;
+	color: var(--secondary-color);
+}
+*,
+*::after,
+*::before {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+/* utilities */
+.container {
+	margin: 0 auto;
+	max-width: var(--max-width);
+	padding: 2rem;
+	color: var(--text-color);
+}
+/* paddings */
+.pt-6 {
+	padding-top: 6rem;
+}
+/* margins */
+.mt-1 {
+	margin-top: 1rem;
+}
+.mt-2 {
+	margin-top: 2rem;
+}
+.mt-3 {
+	margin-top: 3rem;
+}
+.ml-1 {
+	margin-left: 1rem;
+}
+.ml-2 {
+	margin-left: 2rem;
+}
+.ml-3 {
+	margin-left: 3rem;
+}
+
+.mb-1 {
+	margin-bottom: 1rem;
+}
+.mb-2 {
+	margin-bottom: 2rem;
+}
+.mb-3 {
+	margin-bottom: 3rem;
+}
