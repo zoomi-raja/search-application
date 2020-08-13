@@ -1,23 +1,39 @@
 import * as actionTypes from "./actionTypes";
 
 const initialState = {
-	loading: false,
 	data: [],
+	entity: "",
+	loading: false,
+	errMessage: "",
 };
-const auth = (state = initialState, action) => {
+const gitReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.LOADING:
 			return {
 				...state,
 				loading: !state.loading,
 			};
-		case actionTypes.DATA:
+		case actionTypes.SET_ERROR:
 			return {
 				...state,
-				data: action.data,
+				errMessage: action.errMessage,
+				loading: false,
+			};
+		case actionTypes.CLEAR_ERROR:
+			return {
+				...state,
+				errMessage: "",
+				loading: false,
+			};
+		case actionTypes.DATA_FETCHED:
+			return {
+				...state,
+				data: action.data.result,
+				entity: action.data.entity,
+				loading: false,
 			};
 		default:
 			return state;
 	}
 };
-export default auth;
+export default gitReducer;

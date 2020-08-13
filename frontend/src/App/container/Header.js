@@ -1,20 +1,17 @@
 import React, { useState, useEffect, useCallback } from "react";
 import classes from "./Header.module.scss";
 //import utils
+import PropTypes from "prop-types";
 import debounce from "lodash/debounce";
 //import components
 import Head from "../components/head/Head";
 import Input from "../components/ui/input/Input";
 import Select from "../components/ui/select/Select";
+// redux
+import { connect } from "react-redux";
+import * as actions from "../store/git/actions";
 
-const handleDataFetch = async (entityValue, textValue) => {
-	if (textValue.length > 3 && entityValue !== "") {
-		console.log(entityValue, textValue);
-		let response = await fetch("http://localhost:8010/api/search");
-		console.log(response);
-	}
-};
-const Header = () => {
+const Header = (props) => {
 	//states
 	const [text, setText] = useState("");
 	const [entity, setEntity] = useState("");
@@ -25,6 +22,11 @@ const Header = () => {
 		setEntity(entities[0].value);
 		setEntities(entities);
 	}, []);
+	const handleDataFetch = async (entityValue, textValue) => {
+		if (textValue.length > 3 && entityValue !== "") {
+			props.getData(entityValue, textValue);
+		}
+	};
 	const debounceFn = useCallback(debounce(handleDataFetch, 300), []);
 	const onTextChange = useCallback(
 		(event) => {
@@ -42,8 +44,13 @@ const Header = () => {
 		},
 		[debounceFn, text]
 	);
+	let classNames =
+		props.data.length > 0
+			? `${classes.header} ${classes.moveLeft}`
+			: classes.header;
+
 	return (
-		<div className={`${classes.header} ${classes.moveLeft}`}>
+		<div className={classNames}>
 			<Head />
 			<form
 				className={classes.form}
@@ -57,14 +64,26 @@ const Header = () => {
 					onChanged={onTextChange}
 					value={text}
 				/>
-				<Select
-					onChanged={onEntityChange}
-					options={entities}
-					value={entity}
-				></Select>
+				<Select onChanged={onEntityChange} options={entities} value={entity} />
 			</form>
 		</div>
 	);
 };
+Header.propTypes = {
+	data: PropTypes.array,
+};
 
-export default Header;
+const mapStateToProps = (state) => {
+	const props = {
+		data: [...state.git.data],
+	};
+	return props;
+};
+const mapDispatchToProps = (dispatch) => {
+	return {
+		getData: (entity, text) => {
+			dispatch(actions.fetchGitData(entity, text));
+		},
+	};
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

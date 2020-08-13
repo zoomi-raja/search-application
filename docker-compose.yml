@@ -11,6 +11,7 @@ services:
       - v_api:/app/node_modules
     environment:
       - PORT=3001
+      - NODE_ENV=development
   test_frontend:
     image: test_frontend
     container_name: frontend
