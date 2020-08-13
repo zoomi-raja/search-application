@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./App.module.scss";
-
+//components
 import Results from "./components/result/Result";
 //container for one way distribution of data
 import Header from "./container/Header";
