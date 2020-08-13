@@ -1,0 +1,12 @@
+.select {
+	color: var(--text-color);
+	margin-left: 1.2rem;
+	padding: 1.2rem 0.2rem;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	resize: vertical;
+	&,
+	option {
+		text-transform: capitalize;
+	}
+}

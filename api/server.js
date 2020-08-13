@@ -10,7 +10,10 @@ app.use("/api/search", (req, res) => {
 	) {
 		if (err) throw err;
 		obj = JSON.parse(data);
-		res.status(200).json(obj);
+		setTimeout(() => {
+			res.setHeader("Content-Type", "application/json");
+			res.status(200).json(obj);
+		}, 3000);
 	});
 });
 const port = process.env.PORT || 3001;

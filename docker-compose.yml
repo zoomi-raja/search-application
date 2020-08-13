@@ -7,7 +7,7 @@ services:
     ports:
       - 8010:3001
     volumes:
-      - ./api/:/app
+      - ./api:/app
       - v_api:/app/node_modules
     environment:
       - PORT=3001

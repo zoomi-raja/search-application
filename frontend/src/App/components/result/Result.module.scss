@@ -1,0 +1,15 @@
+@import "../../../utility.scss";
+.result {
+	margin-top: 14rem;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 2rem;
+	width: 100%;
+	@include respond(phone) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	& > div {
+		height: 20rem;
+		background-color: var(--text-color);
+	}
+}

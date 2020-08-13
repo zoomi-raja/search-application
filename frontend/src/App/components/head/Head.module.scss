@@ -1,0 +1,13 @@
+.heading {
+	display: flex;
+	align-items: center;
+	margin-bottom: 2rem;
+	&Logo {
+		width: 4.5rem;
+		height: 4.5rem;
+	}
+	&Text {
+		margin-left: 2rem;
+		font-size: 1.4rem;
+	}
+}
