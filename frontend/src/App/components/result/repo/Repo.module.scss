@@ -6,6 +6,7 @@
 		&Img {
 			width: 5rem;
 			height: 5rem;
+			flex-shrink: 0;
 			img {
 				border-radius: 50%;
 			}
