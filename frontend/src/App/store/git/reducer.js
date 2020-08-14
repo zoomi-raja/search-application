@@ -18,6 +18,11 @@ const gitReducer = (state = initialState, action) => {
 				loading: !state.loading,
 			};
 
+		case actionTypes.SET_ENTITY:
+			return {
+				...state,
+				entity: action.entity,
+			};
 		case actionTypes.SET_ENTITIES:
 			return {
 				...state,

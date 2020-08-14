@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect, createRef, useCallback } from "react";
 import classes from "./Header.module.scss";
 //import utils
 import PropTypes from "prop-types";
@@ -14,51 +14,64 @@ import * as actions from "../store/git/actions";
 const Header = ({
 	data,
 	presrvText,
-	presrvEntity,
-	presrvEntities,
+	entity,
+	entities,
 	indexer,
 	getData,
+	setEntity,
 	setEntities,
 	clearData,
 }) => {
-	//states
-	const [text, setText] = useState("");
-	const [entity, setEntity] = useState("");
+	//text ref
+	const textRef = createRef("");
 	//callbacks
 	useEffect(() => {
-		if (presrvEntities.length <= 0) {
+		if (entities.length <= 0) {
 			//todo api call
-			let entities = [{ value: "users" }, { value: "repositories" }];
-			setEntities(entities[0].value, entities);
-			setEntity(entities[0].value);
-		} else {
-			setEntity(presrvEntity);
-			setText(presrvText);
+			let apiEntities = [{ value: "users" }, { value: "repositories" }];
+			setEntities(apiEntities[0].value, apiEntities);
 		}
-	}, [setEntities, setEntity]);
+	}, [setEntities, entities]);
 
-	const handleDataFetch = (entityValue, textValue) => {
-		if (textValue.length > 3 && entityValue !== "") {
-			getData(entityValue, textValue, indexer);
+	const handleDataFetch = ({
+		indexer = {},
+		text = "",
+		entity = "",
+		presrvText = "",
+		textChange = false,
+	}) => {
+		if (text.length > 3 && entity !== "") {
+			getData(entity, text, indexer);
 		} else if (presrvText.length > 0) {
-			//only empty string from cache maintain input
+			//only empty string from store and maintain input value on field
 			clearData();
+		} else if (!textChange) {
+			//entity changed but text is not long enough just updating entity in store
+			setEntity(entity);
 		}
 	};
 	const debounceFn = useCallback(debounce(handleDataFetch, 300), []);
-	const onTextChange = useCallback(
-		(event) => {
-			let value = event.target.value;
-			debounceFn(entity, value);
-			setText(value);
-		},
-		[debounceFn, entity, setText]
-	);
+
+	const onTextChange = () => {
+		debounceFn({
+			text: textRef.current.value,
+			entity,
+			indexer,
+			presrvText,
+			textChange: true,
+		});
+	};
+
 	const onEntityChange = (event) => {
 		let value = event.target.value;
-		setEntity(value);
-		handleDataFetch(value, text);
+		handleDataFetch({
+			text: textRef.current.value,
+			entity: value,
+			indexer,
+			presrvText,
+		});
 	};
+
 	let classNames =
 		data.length > 0 ? `${classes.header} ${classes.moveLeft}` : classes.header;
 
@@ -73,36 +86,33 @@ const Header = ({
 			>
 				<Input
 					type="text"
-					placeholder="start typing to search.."
+					ref={textRef}
+					value={presrvText}
 					onChanged={onTextChange}
-					value={text}
+					placeholder="start typing to search.."
 				/>
-				<Select
-					onChanged={onEntityChange}
-					options={presrvEntities}
-					value={entity}
-				/>
+				<Select onChanged={onEntityChange} options={entities} value={entity} />
 			</form>
 		</div>
 	);
 };
 Header.propTypes = {
-	indexer: PropTypes.object,
 	data: PropTypes.array,
 	text: PropTypes.string,
 	entity: PropTypes.string,
+	indexer: PropTypes.object,
 	entities: PropTypes.array,
 };
 
 const mapStateToProps = ({
-	git: { indexer, data, text, entity, entities },
+	git: { data, text, entity, entities, indexer },
 }) => {
 	const props = {
-		indexer,
+		entity,
+		entities,
 		data: [...data],
 		presrvText: text,
-		presrvEntity: entity,
-		presrvEntities: entities,
+		indexer: { ...indexer },
 	};
 	return props;
 };
@@ -116,6 +126,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setEntities: (entity, entities) => {
 			dispatch(actions.setEntities(entity, entities));
+		},
+		setEntity: (entity) => {
+			dispatch(actions.setEntity(entity));
 		},
 	};
 };

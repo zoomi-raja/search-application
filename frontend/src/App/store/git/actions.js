@@ -6,6 +6,11 @@ export const toggleLoading = () => ({
 	type: actionTypes.LOADING,
 });
 
+export const setEntity = (entity) => ({
+	type: actionTypes.SET_ENTITY,
+	entity,
+});
+
 export const setEntities = (entity, entities) => ({
 	type: actionTypes.SET_ENTITIES,
 	entity,
@@ -40,6 +45,7 @@ export const fetchGitData = (entity = "", text = "", indexer = {}) => {
 	if (_.has(indexer, entity) && _.has(indexer[entity], text)) {
 		return setData(entity, text, indexer[entity][text]);
 	} else {
+		console.log(entity, indexer, _.has(indexer[entity], text));
 		return reduxCatchAsync(async (dispatch) => {
 			dispatch(toggleLoading());
 			let postData = {
