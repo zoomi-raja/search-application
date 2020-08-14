@@ -1,6 +1,7 @@
+import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { shorten } from "../../../utility/utility";
 import classes from "./Repo.module.scss";
+import { shorten } from "../../../utility/utility";
 //import icons
 import Star from "../../../icons/Star";
 import Fork from "../../../icons/Fork";
@@ -65,5 +66,15 @@ const Repo = ({
 			</div>
 		</div>
 	);
+};
+Repo.propTypes = {
+	full_name: PropTypes.string.isRequired,
+	owner: PropTypes.object.isRequired,
+	svn_url: PropTypes.string.isRequired,
+	description: PropTypes.string,
+	language: PropTypes.string,
+	stargazers_count: PropTypes.number,
+	forks: PropTypes.number,
+	watchers: PropTypes.number,
 };
 export default Repo;
