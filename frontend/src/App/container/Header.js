@@ -11,7 +11,7 @@ import Select from "../components/ui/select/Select";
 import { connect } from "react-redux";
 import * as actions from "../store/git/actions";
 
-const Header = ({ text, data, getData, setText, clearData }) => {
+const Header = ({ text, data, indexer, getData, setText, clearData }) => {
 	//states
 	const [entity, setEntity] = useState("");
 	const [entities, setEntities] = useState([]);
@@ -23,7 +23,7 @@ const Header = ({ text, data, getData, setText, clearData }) => {
 	}, []);
 	const handleDataFetch = async (entityValue, textValue) => {
 		if (textValue.length > 3 && entityValue !== "") {
-			getData(entityValue, textValue);
+			getData(entityValue, textValue, indexer);
 		} else if (text.length > 0) {
 			clearData();
 		}
@@ -72,17 +72,18 @@ Header.propTypes = {
 	data: PropTypes.array,
 };
 
-const mapStateToProps = ({ git: { data, text } }) => {
+const mapStateToProps = ({ git: { data, text, indexer } }) => {
 	const props = {
 		data: [...data],
 		text,
+		indexer,
 	};
 	return props;
 };
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getData: (entity, text) => {
-			dispatch(actions.fetchGitData(entity, text));
+		getData: (entity, text, indexer) => {
+			dispatch(actions.fetchGitData(entity, text, indexer));
 		},
 		clearData: () => {
 			dispatch(actions.clearData());
