@@ -43,7 +43,7 @@ const gitReducer = (state = initialState, action) => {
 				...state,
 				data: [],
 			};
-		/*main function responsible for updating indexer againts entity and text searched*/
+		/* state responsible for updating indexer againts entity and text searched*/
 		case actionTypes.FETCHED_DATA:
 			return {
 				...state,

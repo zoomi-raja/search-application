@@ -34,10 +34,20 @@ const Repo = ({
 				<div className={classes.repoHeadImg}>{avatarHTML}</div>
 
 				<div className={classes.repoHeadInfo}>
-					<a className={classes.repoTitle} href={svn_url}>
+					<a
+						className={classes.repoTitle}
+						href={svn_url}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
 						<h2>{shorten(full_name, 26)}</h2>
 					</a>
-					<a className={classes.repoUser} href={owner.html_url}>
+					<a
+						className={classes.repoUser}
+						href={owner.html_url}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
 						{owner.login}
 					</a>
 				</div>
