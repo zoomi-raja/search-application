@@ -5,6 +5,7 @@ const initialState = {
 	indexer: {},
 	text: "",
 	entity: "",
+	entities: [],
 	loading: false,
 	errMessage: "",
 };
@@ -15,6 +16,13 @@ const gitReducer = (state = initialState, action) => {
 			return {
 				...state,
 				loading: !state.loading,
+			};
+
+		case actionTypes.SET_ENTITIES:
+			return {
+				...state,
+				entity: action.entity,
+				entities: action.entities,
 			};
 
 		case actionTypes.SET_ERROR:
@@ -35,12 +43,14 @@ const gitReducer = (state = initialState, action) => {
 			return {
 				...state,
 				data: action.data,
+				text: action.text,
 				entity: action.entity,
 			};
 
 		case actionTypes.CLEAR_DATA:
 			return {
 				...state,
+				text: "",
 				data: [],
 			};
 		/* state responsible for updating indexer againts entity and text searched*/
@@ -49,6 +59,7 @@ const gitReducer = (state = initialState, action) => {
 				...state,
 				data: action.data.result,
 				entity: action.data.entity,
+				text: action.text,
 				indexer: {
 					...state.indexer,
 					[action.data.entity]: {

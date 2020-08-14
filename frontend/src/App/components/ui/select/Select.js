@@ -15,7 +15,7 @@ const Select = (props) => {
 	return (
 		<select
 			className={classes.select}
-			defaultValue={props.value}
+			value={props.value}
 			onChange={props.onChanged}
 		>
 			{options}
