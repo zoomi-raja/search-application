@@ -1,16 +1,20 @@
 import React from "react";
 import User from "./user/User";
+import Repo from "./repo/Repo";
 import classes from "./Result.module.scss";
 
 // redux
 import { connect } from "react-redux";
 
 const Results = (props) => {
-	// props.entity === "users"
 	let items;
 	if (props.data && props.data.length > 0) {
-		items = props.data.map((user, i) => {
-			return <User {...user} key={i} />;
+		items = props.data.map((item, i) => {
+			return props.entity === "users" ? (
+				<User {...item} key={i} />
+			) : (
+				<Repo {...item} key={i} />
+			);
 		});
 	}
 

@@ -6,12 +6,19 @@ const fs = require("fs");
 const cors = require("cors");
 env.config({ path: "./config.env" });
 const app = express();
+app.use(express.json({ limit: "10kb" }));
 app.use(cors());
+const port = process.env.PORT || 3001;
+app.listen(port, () => {
+	console.log(`app running on port num ${port} ....`);
+});
+
 app.post("/api/search", (req, res) => {
-	fs.readFile(`${__dirname}/sample_json/user.json`, "utf8", function (
-		err,
-		data
-	) {
+	let filepath = `${__dirname}/sample_json/repositories.json`;
+	if (req.body.entity == "users") {
+		filepath = `${__dirname}/sample_json/user.json`;
+	}
+	fs.readFile(filepath, "utf8", function (err, data) {
 		if (err) throw err;
 		obj = JSON.parse(data);
 		setTimeout(() => {
@@ -19,10 +26,10 @@ app.post("/api/search", (req, res) => {
 			const response = {
 				status: "success",
 				results: obj.items.length,
-				data: { entity: "users", result: [...obj.items] },
+				data: { entity: req.body.entity, result: [...obj.items] },
 			};
 			res.status(200).json(response);
-		}, 3000);
+		}, 10);
 	});
 });
 // handle 404
@@ -30,7 +37,3 @@ app.all("/api/*", (req, res, next) => {
 	next(new AppError(`Can't find ${req.originalUrl}`, 400));
 });
 app.use(globalErrorHandler);
-const port = process.env.PORT || 3001;
-app.listen(port, () => {
-	console.log(`app running on port num ${port} ....`);
-});

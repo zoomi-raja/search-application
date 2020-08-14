@@ -1,5 +1,21 @@
+@import "../../../../utility.scss";
 .user {
 	position: relative;
+	&Logo {
+		height: 30rem;
+		img {
+			object-fit: cover;
+			height: initial;
+		}
+		@include respond(phone) {
+			width: 54rem;
+			height: 40rem;
+		}
+		@include respond(sphone) {
+			width: 34rem;
+			height: 36rem;
+		}
+	}
 	&Info {
 		position: absolute;
 		bottom: 0;

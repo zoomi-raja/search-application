@@ -12,7 +12,7 @@ const Head = (props) => {
 				<img src={logo} alt="github" />
 			</div>
 			<div className={classes.headingText}>
-				<h2>GitHub Searcher</h2>
+				<h1>GitHub Searcher</h1>
 				<span>Search users or repositories below</span>
 			</div>
 			{props.loading && (

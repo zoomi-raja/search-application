@@ -1,8 +1,15 @@
+@import "../../utility.scss";
 .header {
 	width: 35%;
 	margin: calc(50vh - 2rem) auto 0;
 	transform: translateY(calc(-50%));
 	// transition: transform 0.6s ease;
+	@include respond(phone) {
+		width: 65%;
+	}
+	@include respond(sphone) {
+		width: 100%;
+	}
 
 	&.moveLeft {
 		margin: 0;

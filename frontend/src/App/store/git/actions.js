@@ -30,8 +30,11 @@ export const fetchGitData = (entity, text) => {
 	return reduxCatchAsync(async (dispatch) => {
 		dispatch(toggleLoading());
 		let postData = {
+			headers: {
+				"Content-Type": "application/json",
+			},
 			method: "POST",
-			body: { entity, text },
+			body: JSON.stringify({ entity, text }),
 		};
 		let rawResp = await fetch("http://localhost:8010/api/search", postData);
 		let response = await rawResp.json();
