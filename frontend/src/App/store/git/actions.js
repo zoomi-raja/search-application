@@ -1,33 +1,30 @@
 import * as actionTypes from "./actionTypes";
 import { reduxCatchAsync } from "../../utility/utility";
-export const toggleLoading = () => {
-	return {
-		type: actionTypes.LOADING,
-	};
-};
 
-export const dataFetched = (data) => {
-	return {
-		type: actionTypes.DATA_FETCHED,
-		data,
-	};
-};
+export const toggleLoading = () => ({
+	type: actionTypes.LOADING,
+});
 
-export const setError = (msg) => {
-	return {
-		type: actionTypes.SET_ERROR,
-		errMessage: msg,
-	};
-};
+export const dataFetched = (data) => ({
+	type: actionTypes.DATA_FETCHED,
+	data,
+});
 
-export const clearError = () => {
-	return {
-		type: actionTypes.CLEAR_ERROR,
-	};
-};
+export const setError = (msg) => ({
+	type: actionTypes.SET_ERROR,
+	errMessage: msg,
+});
 
-export const fetchGitData = (entity, text) => {
-	return reduxCatchAsync(async (dispatch) => {
+export const clearError = () => ({
+	type: actionTypes.CLEAR_ERROR,
+});
+
+export const clearData = () => ({
+	type: actionTypes.DATA_CLEAR,
+});
+
+export const fetchGitData = (entity, text) =>
+	reduxCatchAsync(async (dispatch) => {
 		dispatch(toggleLoading());
 		let postData = {
 			headers: {
@@ -45,4 +42,8 @@ export const fetchGitData = (entity, text) => {
 			dispatch(setError(response.message));
 		}
 	}, setError);
-};
+
+export const setText = (text) => ({
+	type: actionTypes.SET_TEXT,
+	text,
+});

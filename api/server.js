@@ -29,7 +29,7 @@ app.post("/api/search", (req, res) => {
 				data: { entity: req.body.entity, result: [...obj.items] },
 			};
 			res.status(200).json(response);
-		}, 10);
+		}, 1000);
 	});
 });
 // handle 404

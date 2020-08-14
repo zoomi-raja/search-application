@@ -11,9 +11,8 @@ import Select from "../components/ui/select/Select";
 import { connect } from "react-redux";
 import * as actions from "../store/git/actions";
 
-const Header = (props) => {
+const Header = ({ text, data, getData, setText, clearData }) => {
 	//states
-	const [text, setText] = useState("");
 	const [entity, setEntity] = useState("");
 	const [entities, setEntities] = useState([]);
 	//callbacks
@@ -24,7 +23,9 @@ const Header = (props) => {
 	}, []);
 	const handleDataFetch = async (entityValue, textValue) => {
 		if (textValue.length > 3 && entityValue !== "") {
-			props.getData(entityValue, textValue);
+			getData(entityValue, textValue);
+		} else if (text.length > 0) {
+			clearData();
 		}
 	};
 	const debounceFn = useCallback(debounce(handleDataFetch, 300), []);
@@ -34,7 +35,7 @@ const Header = (props) => {
 			setText(value);
 			debounceFn(entity, value);
 		},
-		[debounceFn, entity]
+		[debounceFn, entity, setText]
 	);
 	const onEntityChange = useCallback(
 		(event) => {
@@ -45,9 +46,7 @@ const Header = (props) => {
 		[debounceFn, text]
 	);
 	let classNames =
-		props.data.length > 0
-			? `${classes.header} ${classes.moveLeft}`
-			: classes.header;
+		data.length > 0 ? `${classes.header} ${classes.moveLeft}` : classes.header;
 
 	return (
 		<div className={classNames}>
@@ -73,9 +72,10 @@ Header.propTypes = {
 	data: PropTypes.array,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ git: { data, text } }) => {
 	const props = {
-		data: [...state.git.data],
+		data: [...data],
+		text,
 	};
 	return props;
 };
@@ -83,6 +83,12 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		getData: (entity, text) => {
 			dispatch(actions.fetchGitData(entity, text));
+		},
+		clearData: () => {
+			dispatch(actions.clearData());
+		},
+		setText: (text) => {
+			dispatch(actions.setText(text));
 		},
 	};
 };
