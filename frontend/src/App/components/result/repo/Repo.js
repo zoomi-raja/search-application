@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { shorten } from "../../../utility/utility";
 import classes from "./Repo.module.scss";
 //import icons
 import Star from "../../../icons/Star";
 import Fork from "../../../icons/Fork";
 import Watch from "../../../icons/Watch";
+import RepoAvatar from "../../../icons/Repo";
 import Language from "../../../icons/Language";
 const Repo = ({
 	full_name,
@@ -16,12 +17,20 @@ const Repo = ({
 	forks,
 	watchers,
 }) => {
+	const [avatar, setAvatar] = useState();
+	const addDefaultSrc = (e) => {
+		e.preventDefault();
+		setAvatar(<RepoAvatar height="100%" width="100%" />);
+	};
+	let avatarHTML = avatar ? (
+		avatar
+	) : (
+		<img src={owner.avatar_url} alt="repo owner" onError={addDefaultSrc} />
+	);
 	return (
 		<div className={classes.repo}>
 			<div className={classes.repoHead}>
-				<div className={classes.repoHeadImg}>
-					<img src={owner.avatar_url} alt="repo owner" />
-				</div>
+				<div className={classes.repoHeadImg}>{avatarHTML}</div>
 
 				<div className={classes.repoHeadInfo}>
 					<a className={classes.repoTitle} href={svn_url}>
@@ -37,19 +46,19 @@ const Repo = ({
 				<span className={classes.repoBodyDesc}>{shorten(description, 68)}</span>
 				<div className={classes.repoBodyStats}>
 					<span className={classes.statItem}>
-						<Language color="red" />
+						<Language color="red" width="1.4rem" height="1.4rem" />
 						{language}
 					</span>
 					<span className={classes.statItem}>
-						<Star />
+						<Star width="1.4rem" height="1.4rem" />
 						{stargazers_count}
 					</span>
 					<span className={classes.statItem}>
-						<Fork />
+						<Fork width="1.4rem" height="1.4rem" />
 						{forks}
 					</span>
 					<span className={classes.statItem}>
-						<Watch />
+						<Watch width="1.4rem" height="1.4rem" />
 						{watchers}
 					</span>
 				</div>

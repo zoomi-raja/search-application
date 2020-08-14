@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Head.module.scss";
-import logo from "../../../assets/logo.svg";
+import Logo from "../../icons/Logo";
 import Spinner from "../ui/spinner/Spinner";
 // redux
 import { connect } from "react-redux";
@@ -9,7 +9,7 @@ const Head = (props) => {
 	return (
 		<div className={classes.heading}>
 			<div className={classes.headingLogo}>
-				<img src={logo} alt="github" />
+				<Logo width="100%" height="100%" />
 			</div>
 			<div className={classes.headingText}>
 				<h1>GitHub Searcher</h1>
