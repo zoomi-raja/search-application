@@ -1,7 +1,4 @@
-const radisObj = require("../redis");
 const fetch = require("node-fetch");
-
-const expiryTime = 2 * 60 * 60;
 const apiBastPath = "https://api.github.com";
 
 const prepareQueryParam = (entity = "") => {
@@ -109,26 +106,16 @@ const senitiseData = (arObj = [], entity = "") => {
 	}
 	return arObj;
 };
-exports.getSearchResults = async ({ entity, text, page }) => {
+exports.getAllResults = async ({ entity, text, page }) => {
 	page = Number.isInteger(parseInt(page)) ? page : 1;
-	let indexKey = `tradeling-search:${entity}:${text}:${page}`;
-	let cacheBloob = await radisObj.get(indexKey);
-	if (cacheBloob) {
-		return JSON.parse(cacheBloob);
-	} else {
-		let q = prepareQueryParam(entity);
-		let rawResp = await fetch(
-			`${apiBastPath}/search/${entity}?q=${text}+${q}&page=${page}`
-		);
-		let result = await rawResp.json();
-		if (result.items && result.items.length > 0) {
-			result.items = senitiseData([...result.items], entity);
-			await await radisObj.setex(indexKey, expiryTime, JSON.stringify(result));
-		}
-		return result;
-	}
-};
 
-exports.resetCache = async () => {
-	return await radisObj.flushdb();
+	let q = prepareQueryParam(entity);
+	let rawResp = await fetch(
+		`${apiBastPath}/search/${entity}?q=${text}+${q}&page=${page}`
+	);
+	let result = await rawResp.json();
+	if (result.items) {
+		result.items = senitiseData([...result.items], entity);
+	}
+	return result;
 };

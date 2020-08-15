@@ -1,36 +1,51 @@
 const AppError = require("../utils/error");
 const HttpStatus = require("http-status-codes");
 const { catchAsync } = require("../utils/utils");
+const searchService = require("../services/search");
 const { getGitEntities } = require("../services/entities");
-const { getSearchResults } = require("../services/search");
+const { getResults } = require("../repo");
 
-const validateRequest = (body) => {
+const validateRequest = (body, required) => {
 	let result = {
 		status: true,
 		message: "",
 	};
-	let entities = getGitEntities();
-	//sanitize
-	body.text = body.hasOwnProperty("text") ? body.text.trim() : "";
-	body.entity = body.hasOwnProperty("entity") ? body.entity.trim() : "";
-
-	if (body.text == "") {
-		result.status = false;
-		result.message = `Search text missing`;
-	} else if (body.entity == "" || !entities.includes(body.entity)) {
-		result.status = false;
-		result.message = `Invalid Entity type`;
-	}
+	Object.keys(required).forEach((field) => {
+		//sanitize
+		body[field] = body[field] && body[field].trim();
+		if (required[field].required && !body[field]) {
+			result.status = false;
+			result.message = `${field} value missing`;
+		} else if (
+			required[field].hasOwnProperty("values") &&
+			!required[field].values.includes(body[field])
+		) {
+			result.status = false;
+			result.message = `Invalid value for ${field}`;
+		}
+	});
 	return result;
 };
 
-const search = catchAsync(async ({ body }, res, next) => {
-	const { status, message } = validateRequest(body);
+const search = catchAsync(async (req, res, next) => {
+	let entities = getGitEntities();
+	const { status, message } = validateRequest(req.body, {
+		entity: {
+			values: entities,
+			required: true,
+		},
+		text: {
+			required: true,
+		},
+	});
+	//if validation fails
 	if (!status) {
 		next(new AppError(message, HttpStatus.UNPROCESSABLE_ENTITY));
 	} else {
-		const { entity, text, page = 1 } = body;
-		let result = await getSearchResults({ entity, text, page });
+		const { entity } = req.body;
+		//use repo to decide source of data cache/http request
+		let result = await getResults(searchService, req);
+		//result response of api is very dynamic if items are there that means it went well
 		if (result.hasOwnProperty("items")) {
 			const response = {
 				status: "success",
