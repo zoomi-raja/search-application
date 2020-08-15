@@ -1,8 +1,8 @@
 const express = require("express");
 
-const searchController = require("../controllers/searchController");
-const entityController = require("../controllers/entityController");
-const clearCacheController = require("../controllers/clearCacheController");
+const searchController = require("./controllers/searchController");
+const entityController = require("./controllers/entityController");
+const clearCacheController = require("./controllers/clearCacheController");
 
 const router = express.Router();
 router.route("/search").post(searchController);

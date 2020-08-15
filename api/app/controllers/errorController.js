@@ -1,3 +1,4 @@
+const AppError = require("../utils/error");
 const sendErrorDev = (err, res) => {
 	res.status(err.statusCode).json({
 		status: err.status,
@@ -15,10 +16,15 @@ const sendErrorProd = (err, res) => {
 		message: "Something went very wrong!",
 	});
 };
-module.exports = (err, req, res, next) => {
+
+exports.globalErrorHandler = (err, req, res, next) => {
 	err.statusCode = err.statusCode || 500;
 	err.status = err.status || "error";
 	process.env.NODE_ENV === "development"
 		? sendErrorDev(err, res)
 		: sendErrorProd(err, res);
+};
+
+exports.notFound = (req, res, next) => {
+	next(new AppError(`Can't find ${req.originalUrl}`, 400));
 };

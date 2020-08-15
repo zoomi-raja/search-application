@@ -6,11 +6,11 @@ import classes from "./Result.module.scss";
 // redux
 import { connect } from "react-redux";
 
-const Results = (props) => {
+const Results = ({ data }) => {
 	let items;
-	if (props.data && props.data.length > 0) {
-		items = props.data.map((item, i) => {
-			return props.entity === "users" ? (
+	if (data && data.length > 0) {
+		items = data.map((item, i) => {
+			return item.type === "User" ? (
 				<User {...item} key={i} />
 			) : (
 				<Repo {...item} key={i} />
@@ -23,7 +23,6 @@ const Results = (props) => {
 const mapStateToProps = (state) => {
 	const props = {
 		data: [...state.git.data],
-		entity: state.git.entity,
 	};
 	return props;
 };

@@ -1,8 +1,10 @@
 const express = require("express");
 const router = require("./router");
-const cors = require("../utils/cors");
-const notFound = require("../controllers/notfoundController");
-const globalErrorHandler = require("../controllers/errorController");
+const cors = require("./utils/cors");
+const {
+	globalErrorHandler,
+	notFound,
+} = require("./controllers/errorController");
 
 //wireup express app
 const app = express();
@@ -13,5 +15,6 @@ app.use(cors());
 app.use("/api", router);
 // handle 404
 app.use("*", notFound);
+//each error cought will be passed to below middleware
 app.use(globalErrorHandler);
 module.exports = app;
