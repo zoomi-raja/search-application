@@ -10,7 +10,7 @@ const Results = ({ data }) => {
 	let items;
 	if (data && data.length > 0) {
 		items = data.map((item, i) => {
-			return item.type === "User" ? (
+			return ["User", "Organization"].includes(item.type) ? (
 				<User {...item} key={i} />
 			) : (
 				<Repo {...item} key={i} />

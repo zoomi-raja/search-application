@@ -1,6 +1,7 @@
 exports.unhandledError = (server, serverStarted = false) => {
 	return (err) => {
 		// Log the errors
+		console.log("secured");
 		console.error(err);
 
 		// If server has started, close it down
@@ -8,8 +9,14 @@ exports.unhandledError = (server, serverStarted = false) => {
 			server.close(function () {
 				process.exit(1);
 			});
+		} else {
+			process.exit(1);
 		}
 	};
 };
-
-exports.getGitEntities = () => ["users", "repositories"];
+exports.catchAsync = (fn) => {
+	return (req, res, next) => {
+		fn(req, res, next).catch((err) => next(err));
+	};
+};
+exports.getGitEntities = () => ["users", "issues", "repositories"];
