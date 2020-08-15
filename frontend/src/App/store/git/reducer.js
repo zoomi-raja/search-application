@@ -2,11 +2,11 @@ import * as actionTypes from "./actionTypes";
 
 const initialState = {
 	data: [],
-	indexer: {},
 	text: "",
 	entity: "",
-	entities: [],
+	indexer: {},
 	loading: false,
+	entities: [],
 	errMessage: "",
 };
 
@@ -33,15 +33,15 @@ const gitReducer = (state = initialState, action) => {
 		case actionTypes.SET_ERROR:
 			return {
 				...state,
-				errMessage: action.errMessage,
 				loading: false,
+				errMessage: action.errMessage,
 			};
 
 		case actionTypes.CLEAR_ERROR:
 			return {
 				...state,
-				errMessage: "",
 				loading: false,
+				errMessage: "",
 			};
 
 		case actionTypes.SET_DATA:

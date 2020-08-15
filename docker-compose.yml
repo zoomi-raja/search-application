@@ -5,29 +5,29 @@ services:
     container_name: api
     build: ./api
     ports:
-      - 8010:3001
+      - ${API_PORT}:3001
     volumes:
       - ./api:/app
       - v_api:/app/node_modules
     environment:
       - PORT=3001
-      - NODE_ENV=development
+      - NODE_ENV=${API_ENV}
   test_frontend:
     image: test_frontend
     container_name: frontend
     build: ./frontend
     ports:
-      - 80:3000
+      - ${FRONTEND_PORT}:3000
     volumes:
       - ./frontend/:/app
       - v_front:/app/node_modules
     environment:
-      - API_PORT=8000
       - CHOKIDAR_USEPOLLING=true
     stdin_open: true
   redis-server:
     image: redis
     container_name: redis
+    command: redis-server --requirepass ${RESID_PASS}
     volumes:
       - redis:/data
 volumes:
