@@ -117,11 +117,6 @@ exports.getSearchResults = async ({ entity, text, page }) => {
 		return JSON.parse(cacheBloob);
 	} else {
 		let q = prepareQueryParam(entity);
-		console.log(
-			`${apiBastPath}/search/${entity}?q=${encodeURIComponent(
-				text
-			)}+${q}&page=${page}`
-		);
 		let rawResp = await fetch(
 			`${apiBastPath}/search/${entity}?q=${text}+${q}&page=${page}`
 		);
@@ -135,5 +130,5 @@ exports.getSearchResults = async ({ entity, text, page }) => {
 };
 
 exports.resetCache = async () => {
-	await radisObj.flushdb();
+	return await radisObj.flushdb();
 };

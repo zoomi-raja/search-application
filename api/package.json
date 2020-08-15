@@ -1,7 +1,7 @@
 {
 	"name": "Tradeling",
 	"version": "1.0.0",
-	"description": "Test from tradeling",
+	"description": "Assesment Test from tradeling",
 	"main": "server.js",
 	"scripts": {
 		"start": "node server.js",

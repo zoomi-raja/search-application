@@ -1,6 +1,7 @@
 const AppError = require("../utils/error");
 const HttpStatus = require("http-status-codes");
-const { getGitEntities, catchAsync } = require("../utils/utils");
+const { catchAsync } = require("../utils/utils");
+const { getGitEntities } = require("../services/entities");
 const { getSearchResults } = require("../services/search");
 
 const validateRequest = (body) => {
@@ -36,7 +37,7 @@ const search = catchAsync(async ({ body }, res, next) => {
 				results: result.total_count,
 				data: { entity: entity, result: result.items },
 			};
-			res.status(200).json(response);
+			res.status(HttpStatus.OK).json(response);
 		} else {
 			let message = result.message
 				? result.message

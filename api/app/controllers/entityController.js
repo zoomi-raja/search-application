@@ -1,4 +1,5 @@
-const { getGitEntities } = require("../utils/utils");
+const { getGitEntities } = require("../services/entities");
+const HttpStatus = require("http-status-codes");
 const entity = (req, res, next) => {
 	let items = getGitEntities();
 	const response = {
@@ -6,6 +7,6 @@ const entity = (req, res, next) => {
 		results: items.length,
 		data: items,
 	};
-	res.status(200).json(response);
+	res.status(HttpStatus.OK).json(response);
 };
 module.exports = entity;
