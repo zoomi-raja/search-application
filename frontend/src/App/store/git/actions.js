@@ -1,5 +1,6 @@
 import _ from "lodash";
 import * as actionTypes from "./actionTypes";
+import config from "../../../config";
 import { reduxCatchAsync } from "../../utility/utility";
 
 export const toggleLoading = () => ({
@@ -56,7 +57,7 @@ export const fetchGitData = (entity = "", text = "", indexer = {}) => {
 				method: "POST",
 				body: JSON.stringify({ entity, text }),
 			};
-			let rawResp = await fetch("http://localhost:8010/api/search", postData);
+			let rawResp = await fetch(`${config.API_URL}/search`, postData);
 			let response = await rawResp.json();
 			if (rawResp.status === 200) {
 				dispatch(dataFetched(response.data, text));
@@ -70,7 +71,7 @@ export const fetchGitData = (entity = "", text = "", indexer = {}) => {
 export const initEntities = () => {
 	return reduxCatchAsync(async (dispatch) => {
 		dispatch(toggleLoading());
-		let rawResp = await fetch("http://localhost:8010/api/entities");
+		let rawResp = await fetch(`${config.API_URL}/entities`);
 		let response = await rawResp.json();
 		if (rawResp.status === 200) {
 			let apiEntities = response.data;
