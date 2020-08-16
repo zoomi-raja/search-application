@@ -1,0 +1,11 @@
+{
+	"definition": {
+		"info": {
+			"title": "Search Application",
+			"description": "Document to maintain API for test assesment Search Application",
+			"version": "1.0.0"
+		},
+		"schemes": ["http", "https"]
+	},
+	"apis": ["./app/router.js"]
+}

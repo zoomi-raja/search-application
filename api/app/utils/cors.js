@@ -1,9 +1,5 @@
 const cors = require("cors");
-const allowedOrigins = [
-	"http://localhost",
-	"http://localhost:8010",
-	"chrome-extension://biemppheiopfggogojnfpkngdkchelik",
-];
+const allowedOrigins = ["http://localhost", "http://localhost:8010"];
 const setCors = () => {
 	return cors({
 		origin: (origin, callback) => {
