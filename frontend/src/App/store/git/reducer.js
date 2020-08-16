@@ -61,6 +61,14 @@ const gitReducer = (state = initialState, action) => {
 			};
 		/* state responsible for updating indexer againts entity and text searched*/
 		case actionTypes.FETCHED_DATA:
+			if (
+				state.indexer[action.entity] &&
+				state.indexer[action.entity][action.text]
+			) {
+				action.result = state.indexer[action.entity][action.text].concat(
+					action.result
+				);
+			}
 			return {
 				...state,
 				data: action.result,

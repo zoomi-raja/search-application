@@ -40,7 +40,7 @@ const Header = ({
 		textChange = false,
 	}) => {
 		if (text.length > 3 && entity !== "") {
-			getData(entity, text, indexer);
+			getData({ entity, text, indexer });
 		} else if (presrvText.length > 0) {
 			//only empty string from store and maintain input value on field
 			clearData();
@@ -123,8 +123,8 @@ const mapStateToProps = ({
 };
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getData: (entity, text, indexer) => {
-			dispatch(actions.fetchGitData(entity, text, indexer));
+		getData: ({ entity, text, indexer }) => {
+			dispatch(actions.fetchGitData({ entity, text, indexer }));
 		},
 		clearData: () => {
 			dispatch(actions.clearData());

@@ -12,7 +12,7 @@ export const setEntity = (entity) => ({
 	entity,
 });
 
-export const setEntities = (entity, entities) => ({
+export const setEntities = ({ entity, entities }) => ({
 	type: actionTypes.SET_ENTITIES,
 	entity,
 	entities,
@@ -34,7 +34,7 @@ export const clearError = () => ({
 	type: actionTypes.CLEAR_ERROR,
 });
 
-export const setData = (entity, text, data = []) => ({
+export const setData = ({ entity, text, indexer: data = [] }) => ({
 	type: actionTypes.SET_DATA,
 	entity,
 	text,
@@ -44,9 +44,14 @@ export const clearData = () => ({
 	type: actionTypes.CLEAR_DATA,
 });
 /*main function to fetch data from api if not available in local chache */
-export const fetchGitData = (entity = "", text = "", indexer = {}) => {
-	if (_.has(indexer, entity) && _.has(indexer[entity], text)) {
-		return setData(entity, text, indexer[entity][text]);
+export const fetchGitData = ({
+	entity = "",
+	text = "",
+	indexer = {},
+	page = 1,
+}) => {
+	if (_.has(indexer, entity) && _.has(indexer[entity], text) && page < 2) {
+		return setData({ entity, text, indexer: indexer[entity][text] });
 	} else {
 		return reduxCatchAsync(async (dispatch) => {
 			dispatch(toggleLoading());
@@ -55,7 +60,7 @@ export const fetchGitData = (entity = "", text = "", indexer = {}) => {
 					"Content-Type": "application/json",
 				},
 				method: "POST",
-				body: JSON.stringify({ entity, text }),
+				body: JSON.stringify({ entity, text, page }),
 			};
 			let rawResp = await fetch(`${config.API_URL}/search`, postData);
 			let response = await rawResp.json();
@@ -79,7 +84,7 @@ export const initEntities = () => {
 			if (apiEntities[0] === "") {
 				apiEntities = [{ value: "users" }, { value: "repositories" }];
 			}
-			dispatch(setEntities(apiEntities[0], apiEntities));
+			dispatch(setEntities({ entity: apiEntities[0], entities: apiEntities }));
 		} else {
 			dispatch(setError(response.message || ""));
 		}
