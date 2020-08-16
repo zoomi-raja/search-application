@@ -1,7 +1,6 @@
 exports.unhandledError = (server, serverStarted = false) => {
 	return (err) => {
 		// Log the errors
-		console.log("secured");
 		console.error(err);
 
 		// If server has started, close it down

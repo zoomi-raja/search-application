@@ -7,5 +7,5 @@ app.listen(port, () => {
 	serverStarted = true;
 });
 //process level exceptions/error
-process.on("uncaughtException", unhandledError(app));
-process.on("unhandledRejection", unhandledError(app));
+process.on("uncaughtException", unhandledError(app, serverStarted));
+process.on("unhandledRejection", unhandledError(app, serverStarted));
