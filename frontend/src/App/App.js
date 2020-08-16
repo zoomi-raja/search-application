@@ -47,7 +47,7 @@ const mapStateToProps = ({ git: { errMessage, loading } }) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		resetErropr: () => {
+		resetError: () => {
 			dispatch(clearError());
 		},
 		flushCache: () => {
