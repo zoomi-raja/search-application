@@ -1,1 +1,1 @@
-exports.getGitEntities = () => ["users", "issues", "repositories"];
+exports.getGitEntities = () => ["users", "repositories"];

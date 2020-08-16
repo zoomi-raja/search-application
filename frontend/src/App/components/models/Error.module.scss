@@ -1,0 +1,43 @@
+.error {
+	position: relative;
+	.text {
+		font-size: 1.6rem;
+		color: red;
+	}
+
+	.close {
+		width: 1.4rem;
+		height: 1.4rem;
+		position: absolute;
+		right: -1rem;
+		opacity: 0.3;
+		border: 0;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		background: none;
+		outline: none;
+		cursor: pointer;
+		top: -1.2rem;
+		cursor: pointer;
+		&:hover {
+			opacity: 1;
+		}
+		&:before,
+		&:after {
+			position: absolute;
+			content: " ";
+			height: 1.6rem;
+			width: 0.2rem;
+			background-color: #333;
+			top: 0;
+		}
+		&:before {
+			transform: rotate(45deg);
+		}
+
+		&:after {
+			transform: rotate(-45deg);
+		}
+	}
+}
