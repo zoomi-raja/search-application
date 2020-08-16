@@ -47,10 +47,3 @@ it("Get results from git", async (done) => {
 	expect(res.body.data).toHaveProperty("result");
 	done();
 });
-
-it("should clear cache", async () => {
-	const appObj = request(app);
-	const res = await appObj.delete("/api/clear-cache");
-	expect(res.statusCode).toEqual(200);
-	expect(res.body.status).toEqual("success");
-});
