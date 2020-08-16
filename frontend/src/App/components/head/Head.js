@@ -1,10 +1,15 @@
 import React from "react";
+
 import Logo from "../../icons/Logo";
 import classes from "./Head.module.scss";
 import Spinner from "../ui/spinner/Spinner";
+
 // redux
 import { connect } from "react-redux";
 
+/** Head component for main search box
+ * it also hold spinner for loading ( search/clear, cache, infinite scroll)
+ */
 const Head = (props) => {
 	return (
 		<div className={classes.heading}>

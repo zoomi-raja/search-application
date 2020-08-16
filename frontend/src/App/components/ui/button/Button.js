@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./Button.module.scss";
+
 const button = (props) => (
 	<button
 		disabled={props.disabled}
@@ -9,4 +10,5 @@ const button = (props) => (
 		{props.children}
 	</button>
 );
+
 export default button;

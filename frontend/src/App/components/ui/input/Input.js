@@ -1,5 +1,6 @@
 import React, { forwardRef } from "react";
 import classes from "./Input.module.scss";
+
 const Input = forwardRef((props, ref) => (
 	<input
 		ref={ref}
@@ -10,4 +11,5 @@ const Input = forwardRef((props, ref) => (
 		placeholder={props.placeholder}
 	/>
 ));
+
 export default Input;

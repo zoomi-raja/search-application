@@ -1,13 +1,16 @@
 import PropTypes from "prop-types";
+
 import React, { useState } from "react";
 import classes from "./Repo.module.scss";
 import { shorten } from "../../../utility/utility";
+
 //import icons
 import Star from "../../../icons/Star";
 import Fork from "../../../icons/Fork";
 import Watch from "../../../icons/Watch";
 import RepoAvatar from "../../../icons/Repo";
 import Language from "../../../icons/Language";
+
 const Repo = ({
 	full_name,
 	owner,
@@ -19,15 +22,19 @@ const Repo = ({
 	watchers,
 }) => {
 	const [avatar, setAvatar] = useState();
+
+	/** handle if user image somehow missing */
 	const addDefaultSrc = (e) => {
 		e.preventDefault();
 		setAvatar(<RepoAvatar height="100%" width="100%" />);
 	};
+
 	let avatarHTML = avatar ? (
 		avatar
 	) : (
 		<img src={owner.avatar_url} alt="repo owner" onError={addDefaultSrc} />
 	);
+
 	return (
 		<div className={classes.repo}>
 			<div className={classes.repoHead}>
@@ -77,6 +84,8 @@ const Repo = ({
 		</div>
 	);
 };
+
+/** Required Props for component */
 Repo.propTypes = {
 	full_name: PropTypes.string.isRequired,
 	owner: PropTypes.object.isRequired,

@@ -1,15 +1,19 @@
-import React, { useEffect, createRef, useCallback } from "react";
 import classes from "./Header.module.scss";
+
 //import utils
 import PropTypes from "prop-types";
 import debounce from "lodash/debounce";
+
 //import components
 import Head from "../components/head/Head";
 import Input from "../components/ui/input/Input";
 import Select from "../components/ui/select/Select";
+
 // redux
 import { connect } from "react-redux";
 import * as actions from "../store/git/actions";
+
+import React, { useEffect, createRef, useCallback } from "react";
 
 const Header = ({
 	data,
@@ -23,7 +27,7 @@ const Header = ({
 	initEntities,
 	clearData,
 }) => {
-	//text ref
+	/** text refrence to keep seprate text value of store and for input field */
 	const textRef = createRef("");
 	//callbacks
 	useEffect(() => {
@@ -32,6 +36,7 @@ const Header = ({
 		}
 	}, [initEntities, entities]);
 
+	/** this function is called from lodash depounch function and setting value in store */
 	const handleDataFetch = ({
 		indexer = {},
 		text = "",
@@ -51,6 +56,7 @@ const Header = ({
 	};
 	const debounceFn = useCallback(debounce(handleDataFetch, 300), []);
 
+	/** handling of text change through debounce */
 	const onTextChange = () => {
 		debounceFn({
 			text: textRef.current.value,
@@ -60,7 +66,7 @@ const Header = ({
 			textChange: true,
 		});
 	};
-
+	/** entity change is slow event so we can go without debounce */
 	const onEntityChange = (event) => {
 		let value = event.target.value;
 		handleDataFetch({
@@ -70,7 +76,7 @@ const Header = ({
 			presrvText,
 		});
 	};
-
+	/** move search box top left when store(redux) has data */
 	let classNames =
 		data.length > 0 ? `${classes.header} ${classes.moveLeft}` : classes.header;
 
@@ -100,6 +106,7 @@ const Header = ({
 		</div>
 	);
 };
+/** type of props required for component */
 Header.propTypes = {
 	data: PropTypes.array,
 	text: PropTypes.string,
@@ -108,6 +115,7 @@ Header.propTypes = {
 	entities: PropTypes.array,
 };
 
+/** properties of store required by this component */
 const mapStateToProps = ({
 	git: { data, text, entity, entities, indexer, loading },
 }) => {

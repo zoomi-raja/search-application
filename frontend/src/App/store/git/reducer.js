@@ -23,6 +23,7 @@ const gitReducer = (state = initialState, action) => {
 				...state,
 				entity: action.entity,
 			};
+
 		case actionTypes.SET_ENTITIES:
 			return {
 				...state,
@@ -64,6 +65,7 @@ const gitReducer = (state = initialState, action) => {
 			return {
 				...initialState,
 			};
+
 		/* state responsible for updating indexer againts entity and text searched*/
 		case actionTypes.FETCHED_DATA:
 			if (

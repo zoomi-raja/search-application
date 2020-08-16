@@ -1,19 +1,24 @@
 import PropTypes from "prop-types";
+
 import React, { useState } from "react";
 import classes from "./User.module.scss";
 import UserAvatar from "../../../icons/User";
 
 const User = ({ avatar_url, html_url, login }) => {
 	const [avatar, setAvatar] = useState();
+
+	/** to handle if some how user avatar is missing */
 	const addDefaultSrc = (e) => {
 		e.preventDefault();
 		setAvatar(<UserAvatar height="100%" width="100%" />);
 	};
+
 	let avatarHTML = avatar ? (
 		avatar
 	) : (
 		<img src={avatar_url} alt="git user" onError={addDefaultSrc} />
 	);
+
 	return (
 		<div className={classes.user}>
 			<div className={classes.userLogo}>{avatarHTML}</div>
@@ -26,6 +31,8 @@ const User = ({ avatar_url, html_url, login }) => {
 		</div>
 	);
 };
+
+/**Required props for component */
 User.propTypes = {
 	avatar_url: PropTypes.string,
 	html_url: PropTypes.string.isRequired,

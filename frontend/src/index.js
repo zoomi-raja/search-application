@@ -8,6 +8,7 @@ import * as serviceWorker from "./serviceWorker";
 import { PersistGate } from "redux-persist/integration/react";
 const { store, persistor } = configureStore();
 
+/** redux store is configured here */
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>

@@ -1,10 +1,12 @@
 import React from "react";
+
 //components
+import classes from "./App.module.scss";
 import Model from "./components/ui/model/Model";
 import Results from "./components/result/Result";
 import ErrorModel from "./components/models/Error";
 import Button from "./components/ui/button/Button";
-import classes from "./App.module.scss";
+
 // redux
 import { connect } from "react-redux";
 import { clearError, flushCache } from "./store/git/actions";
@@ -13,6 +15,7 @@ import { clearError, flushCache } from "./store/git/actions";
 import Header from "./container/Header";
 
 function App({ errMessage, loading, resetError, flushCache }) {
+	/** Any error from redux store or from catchAsync it will be shown from here */
 	let alert = errMessage && (
 		<Model show={!!errMessage} onClose={resetError}>
 			<ErrorModel msg={errMessage} onClose={resetError} />
@@ -32,6 +35,8 @@ function App({ errMessage, loading, resetError, flushCache }) {
 		</section>
 	);
 }
+
+/** map store properties to component */
 const mapStateToProps = ({ git: { errMessage, loading } }) => {
 	const props = {
 		errMessage,
@@ -39,6 +44,7 @@ const mapStateToProps = ({ git: { errMessage, loading } }) => {
 	};
 	return props;
 };
+
 const mapDispatchToProps = (dispatch) => {
 	return {
 		resetErropr: () => {
