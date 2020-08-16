@@ -4,6 +4,7 @@ const request = require("supertest");
 //mocking
 const fetch = require("node-fetch");
 
+//available git entites in our system
 it("should get entities", async (done) => {
 	const appObj = request(app);
 	const res = await appObj.get("/api/entities");
@@ -12,7 +13,8 @@ it("should get entities", async (done) => {
 	done();
 });
 
-it("Get results from git", async (done) => {
+//fetch result basis on provided request (cache/Git API)
+it("Get results from git (moked response)", async (done) => {
 	const { Response } = jest.requireActual("node-fetch");
 	fetch.mockReturnValue(
 		Promise.resolve(
