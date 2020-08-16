@@ -59,9 +59,15 @@ const gitReducer = (state = initialState, action) => {
 				text: "",
 				data: [],
 			};
+
+		case actionTypes.CLEAR_CACHE:
+			return {
+				...initialState,
+			};
 		/* state responsible for updating indexer againts entity and text searched*/
 		case actionTypes.FETCHED_DATA:
 			if (
+				//aditional condition to compensate infinite scroll not properly handled can be improved
 				state.indexer[action.entity] &&
 				state.indexer[action.entity][action.text]
 			) {
@@ -84,11 +90,6 @@ const gitReducer = (state = initialState, action) => {
 				loading: false,
 			};
 
-		case actionTypes.SET_TEXT:
-			return {
-				...state,
-				text: action.text,
-			};
 		default:
 			return state;
 	}

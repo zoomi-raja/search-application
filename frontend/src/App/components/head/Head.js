@@ -1,6 +1,6 @@
 import React from "react";
-import classes from "./Head.module.scss";
 import Logo from "../../icons/Logo";
+import classes from "./Head.module.scss";
 import Spinner from "../ui/spinner/Spinner";
 // redux
 import { connect } from "react-redux";

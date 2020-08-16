@@ -33,15 +33,20 @@ export const setError = (msg = "") => ({
 export const clearError = () => ({
 	type: actionTypes.CLEAR_ERROR,
 });
-
+//set data from indexer to current store data
 export const setData = ({ entity, text, indexer: data = [] }) => ({
 	type: actionTypes.SET_DATA,
 	entity,
 	text,
 	data,
 });
+//clear current loaded data from store data property
 export const clearData = () => ({
 	type: actionTypes.CLEAR_DATA,
+});
+//set inital state of store
+export const clearCache = () => ({
+	type: actionTypes.CLEAR_CACHE,
 });
 /*main function to fetch data from api if not available in local chache */
 export const fetchGitData = ({
@@ -89,4 +94,15 @@ export const initEntities = () => {
 			dispatch(setError(response.message || ""));
 		}
 	}, setError);
+};
+
+/** reset cache from both end */
+export const flushCache = () => {
+	return reduxCatchAsync(async (dispatch) => {
+		dispatch(toggleLoading());
+		await fetch(`${config.API_URL}/clear-cache`, {
+			method: "DELETE",
+		});
+		dispatch(clearCache());
+	});
 };
