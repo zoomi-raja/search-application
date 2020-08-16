@@ -1,3 +1,4 @@
+/**just to hold my status code to be returned in api */
 class AppError extends Error {
 	constructor(message, statusCode) {
 		super(message);

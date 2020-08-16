@@ -1,10 +1,14 @@
 const AppError = require("../utils/error");
+
 const HttpStatus = require("http-status-codes");
 const { catchAsync } = require("../utils/utils");
 const searchService = require("../services/search");
 const { getGitEntities } = require("../services/entities");
 const { getResults } = require("../repo");
 
+/** Validation function for search request requests
+ *  can be moved to seprate folder but as its small project i put it here
+ * */
 const validateRequest = (body, required) => {
 	let result = {
 		status: true,
@@ -28,6 +32,8 @@ const validateRequest = (body, required) => {
 };
 
 const search = catchAsync(async (req, res, next) => {
+	/**Get GIT entities available in our system */
+
 	let entities = getGitEntities();
 	const { status, message } = validateRequest(req.body, {
 		entity: {

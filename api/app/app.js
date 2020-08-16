@@ -4,6 +4,7 @@ const cors = require("./utils/cors");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
+/**Error handlers for our app */
 const {
 	globalErrorHandler,
 	notFound,

@@ -1,6 +1,8 @@
 const fetch = require("node-fetch");
+
 const apiBastPath = "https://api.github.com";
 
+/** Preparing query params for git API */
 const prepareQueryParam = (entity = "") => {
 	let q = "";
 	switch (entity) {
@@ -16,6 +18,7 @@ const prepareQueryParam = (entity = "") => {
 	return q;
 };
 
+/** No need to hold all data returned by GIT just holding the keys we need */
 const senitiseData = (arObj = [], entity = "") => {
 	switch (entity) {
 		case "repositories":
@@ -106,6 +109,8 @@ const senitiseData = (arObj = [], entity = "") => {
 	}
 	return arObj;
 };
+
+/** main function to make http request to fetch data from GIT */
 exports.getAllResults = async ({ entity, text, page }) => {
 	page = Number.isInteger(parseInt(page)) ? page : 1;
 

@@ -1,3 +1,6 @@
+/**this handler is used on service level is error is not cought so log the error and
+ * properly shutdown server there will be no api response */
+
 exports.unhandledError = (server, serverStarted = false) => {
 	return (err) => {
 		// Log the errors

@@ -2,6 +2,10 @@ const radisObj = require("./utils/redis");
 const AppError = require("./utils/error");
 const expiryTime = 2 * 60 * 60;
 
+/**added extra layer on top fetching data from git api as if any other
+ * object also need cache it can implement getAllResults method to fully
+ * utilitze this function */
+
 exports.getResults = async (service, { body }) => {
 	try {
 		const { entity, text, page } = body;
@@ -21,6 +25,8 @@ exports.getResults = async (service, { body }) => {
 		throw new AppError(err.message, 500);
 	}
 };
+
+/**function to reset cache */
 exports.resetCache = async () => {
 	return await radisObj.flushdb();
 };

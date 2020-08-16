@@ -1,6 +1,9 @@
 const cors = require("cors");
+/**default whitelisted urls */
 const allowedOrigins = ["http://localhost", "http://localhost:8010"];
+
 const setCors = () => {
+	/**white list url can be passed as environment variable */
 	if (process.env.WHITELIST_DOMAIN)
 		allowedOrigins.push(process.env.WHITELIST_DOMAIN);
 
@@ -18,4 +21,5 @@ const setCors = () => {
 		},
 	});
 };
+
 module.exports = setCors;
