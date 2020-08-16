@@ -110,9 +110,8 @@ exports.getAllResults = async ({ entity, text, page }) => {
 	page = Number.isInteger(parseInt(page)) ? page : 1;
 
 	let q = prepareQueryParam(entity);
-	let rawResp = await fetch(
-		`${apiBastPath}/search/${entity}?q=${text}+${q}&page=${page}`
-	);
+	let gitApi = `${apiBastPath}/search/${entity}?q=${text}+${q}&page=${page}`;
+	let rawResp = await fetch(gitApi);
 	let result = await rawResp.json();
 	if (result.items) {
 		result.items = senitiseData([...result.items], entity);
