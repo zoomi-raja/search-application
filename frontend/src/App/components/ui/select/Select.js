@@ -6,8 +6,8 @@ const Select = ({ value, options, disabled, onChanged }) => {
 	if (options && options.length > 0) {
 		arOptions = options.map((option, i) => {
 			return (
-				<option key={i} value={option.value}>
-					{option.value}
+				<option key={i} value={option}>
+					{option}
 				</option>
 			);
 		});

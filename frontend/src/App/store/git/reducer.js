@@ -27,6 +27,7 @@ const gitReducer = (state = initialState, action) => {
 			return {
 				...state,
 				entity: action.entity,
+				loading: false,
 				entities: action.entities,
 			};
 
@@ -62,14 +63,14 @@ const gitReducer = (state = initialState, action) => {
 		case actionTypes.FETCHED_DATA:
 			return {
 				...state,
-				data: action.data.result,
-				entity: action.data.entity,
+				data: action.result,
+				entity: action.entity,
 				text: action.text,
 				indexer: {
 					...state.indexer,
-					[action.data.entity]: {
-						...state.indexer[action.data.entity],
-						[action.text]: action.data.result,
+					[action.entity]: {
+						...state.indexer[action.entity],
+						[action.text]: action.result,
 					},
 				},
 				loading: false,

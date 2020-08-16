@@ -16,9 +16,11 @@ export const setEntities = (entity, entities) => ({
 	entity,
 	entities,
 });
-export const dataFetched = (data = [], text = "") => ({
+
+export const dataFetched = ({ entity = "", result }, text = "") => ({
 	type: actionTypes.FETCHED_DATA,
-	data,
+	entity,
+	result,
 	text,
 });
 
@@ -45,7 +47,6 @@ export const fetchGitData = (entity = "", text = "", indexer = {}) => {
 	if (_.has(indexer, entity) && _.has(indexer[entity], text)) {
 		return setData(entity, text, indexer[entity][text]);
 	} else {
-		console.log(entity, indexer, _.has(indexer[entity], text));
 		return reduxCatchAsync(async (dispatch) => {
 			dispatch(toggleLoading());
 			let postData = {
@@ -60,8 +61,26 @@ export const fetchGitData = (entity = "", text = "", indexer = {}) => {
 			if (rawResp.status === 200) {
 				dispatch(dataFetched(response.data, text));
 			} else {
-				dispatch(setError(response.message));
+				dispatch(setError(response.message || ""));
 			}
 		}, setError);
 	}
+};
+/*set initial intities*/
+export const initEntities = () => {
+	return reduxCatchAsync(async (dispatch) => {
+		dispatch(toggleLoading());
+		let rawResp = await fetch("http://localhost:8010/api/entities");
+		let response = await rawResp.json();
+		if (rawResp.status === 200) {
+			let apiEntities = response.data;
+			//just to make sure wo dont miss entities on start up
+			if (apiEntities[0] === "") {
+				apiEntities = [{ value: "users" }, { value: "repositories" }];
+			}
+			dispatch(setEntities(apiEntities[0], apiEntities));
+		} else {
+			dispatch(setError(response.message || ""));
+		}
+	}, setError);
 };

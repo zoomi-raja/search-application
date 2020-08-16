@@ -20,7 +20,7 @@ const Header = ({
 	loading,
 	getData,
 	setEntity,
-	setEntities,
+	initEntities,
 	clearData,
 }) => {
 	//text ref
@@ -28,11 +28,9 @@ const Header = ({
 	//callbacks
 	useEffect(() => {
 		if (entities.length <= 0) {
-			//todo api call
-			let apiEntities = [{ value: "users" }, { value: "repositories" }];
-			setEntities(apiEntities[0].value, apiEntities);
+			initEntities();
 		}
-	}, [setEntities, entities]);
+	}, [initEntities, entities]);
 
 	const handleDataFetch = ({
 		indexer = {},
@@ -131,8 +129,8 @@ const mapDispatchToProps = (dispatch) => {
 		clearData: () => {
 			dispatch(actions.clearData());
 		},
-		setEntities: (entity, entities) => {
-			dispatch(actions.setEntities(entity, entities));
+		initEntities: () => {
+			dispatch(actions.initEntities());
 		},
 		setEntity: (entity) => {
 			dispatch(actions.setEntity(entity));
