@@ -1,4 +1,4 @@
-const radisObj = require("./redis");
+const radisObj = require("./utils/redis");
 const AppError = require("./utils/error");
 const expiryTime = 2 * 60 * 60;
 

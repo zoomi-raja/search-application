@@ -1,6 +1,9 @@
 const express = require("express");
 const router = require("./router");
 const cors = require("./utils/cors");
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+
 const {
 	globalErrorHandler,
 	notFound,
@@ -11,6 +14,23 @@ const app = express();
 app.use(express.json({ limit: "10kb" }));
 //whitelist required url from cors
 app.use(cors());
+// swagger
+const options = {
+	definition: {
+		info: {
+			description:
+				"Document to maintain API for test assesment Search Application",
+			title: "Search Application", // Title (required)
+			version: "1.0.0", // Version (required)
+			servers: ["http://localhost:8010"],
+		},
+	},
+	// Path to the API docs
+	apis: ["./app/router.js"],
+};
+const swaggerSpec = swaggerJSDoc(options);
+app.use("/api-docs", swaggerUi.serve);
+app.get("/api-docs", swaggerUi.setup(swaggerSpec));
 // routes
 app.use("/api", router);
 // handle 404
