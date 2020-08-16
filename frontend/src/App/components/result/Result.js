@@ -7,9 +7,9 @@ import classes from "./Result.module.scss";
 import { connect } from "react-redux";
 
 const Results = ({ data }) => {
-	let items;
+	let html = <span>No Result (search your interest) ...!</span>;
 	if (data && data.length > 0) {
-		items = data.map((item, i) => {
+		html = data.map((item, i) => {
 			return ["User", "Organization"].includes(item.type) ? (
 				<User {...item} key={i} />
 			) : (
@@ -18,7 +18,7 @@ const Results = ({ data }) => {
 		});
 	}
 
-	return <div className={classes.result}>{items}</div>;
+	return <div className={classes.result}>{html}</div>;
 };
 const mapStateToProps = (state) => {
 	const props = {

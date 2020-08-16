@@ -17,6 +17,7 @@ const Header = ({
 	entity,
 	entities,
 	indexer,
+	loading,
 	getData,
 	setEntity,
 	setEntities,
@@ -91,7 +92,12 @@ const Header = ({
 					onChanged={onTextChange}
 					placeholder="start typing to search.."
 				/>
-				<Select onChanged={onEntityChange} options={entities} value={entity} />
+				<Select
+					onChanged={onEntityChange}
+					options={entities}
+					value={entity}
+					disabled={loading}
+				/>
 			</form>
 		</div>
 	);
@@ -105,7 +111,7 @@ Header.propTypes = {
 };
 
 const mapStateToProps = ({
-	git: { data, text, entity, entities, indexer },
+	git: { data, text, entity, entities, indexer, loading },
 }) => {
 	const props = {
 		entity,
@@ -113,6 +119,7 @@ const mapStateToProps = ({
 		data: [...data],
 		presrvText: text,
 		indexer: { ...indexer },
+		loading,
 	};
 	return props;
 };
