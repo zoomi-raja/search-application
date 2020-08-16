@@ -17,7 +17,7 @@ const Results = ({ data, indexer, text, entity, getData }) => {
 		getData({ text, entity, page: count, indexer });
 	};
 
-	let html = <span>No Result (search your interest) ...!</span>;
+	let html;
 	if (data && data.length > 0) {
 		html = data.map((item, i) => {
 			return ["User", "Organization"].includes(item.type) ? (
@@ -26,6 +26,8 @@ const Results = ({ data, indexer, text, entity, getData }) => {
 				<Repo {...item} key={i} />
 			);
 		});
+	} else if (text != "") {
+		html = <span>No Result Found ...!</span>;
 	}
 	// has more is true as not mainting page data in redux
 	return (
