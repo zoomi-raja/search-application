@@ -28,17 +28,17 @@ const Results = ({ data, indexer, text, entity, getData }) => {
 	let html;
 	if (data && data.length > 0) {
 		html = data.map((item, i) => {
-			return ["User", "Organization"].includes(item.type) ? (
+			return entity === "users" ? (
 				<User {...item} key={i} />
 			) : (
 				<Repo {...item} key={i} />
 			);
 		});
-	} else if (text != "") {
+	} else if (text !== "") {
 		html = <span>No Result Found ...!</span>;
 	}
 
-	/**todo have set hasMore = true as of now not mainting page number in redux
+	/** todo have set hasMore = true as of now not mainting page number in redux
 	 * its additional feature not required in the assesment test
 	 */
 

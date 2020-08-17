@@ -9,20 +9,20 @@ export const toggleLoading = () => ({
 	type: actionTypes.LOADING,
 });
 
-/**set current selected entity as string */
+/** Set current selected entity as string */
 export const setEntity = (entity) => ({
 	type: actionTypes.SET_ENTITY,
 	entity,
 });
 
-/**Array of entites available in our system fetched from api */
+/** Array of entites available in our system fetched from api */
 export const setEntities = ({ entity, entities }) => ({
 	type: actionTypes.SET_ENTITIES,
 	entity,
 	entities,
 });
 
-/** action to compensate data fetched through api */
+/** Action to compensate data fetched through api */
 export const dataFetched = ({ entity = "", result }, text = "") => ({
 	type: actionTypes.FETCHED_DATA,
 	entity,
@@ -39,7 +39,7 @@ export const clearError = () => ({
 	type: actionTypes.CLEAR_ERROR,
 });
 
-//set data from indexer to current store data
+/** Set data from indexer to current store data */
 export const setData = ({ entity, text, indexer: data = [] }) => ({
 	type: actionTypes.SET_DATA,
 	entity,
@@ -47,16 +47,16 @@ export const setData = ({ entity, text, indexer: data = [] }) => ({
 	data,
 });
 
-//clear current loaded data from store data property
+/** Clear current loaded data from store data property */
 export const clearData = () => ({
 	type: actionTypes.CLEAR_DATA,
 });
-//set inital state of store
+/** Set inital state of store */
 export const clearCache = () => ({
 	type: actionTypes.CLEAR_CACHE,
 });
 
-/*main function to fetch data from api if not available in local chache */
+/** Main function to fetch data from api if not available in local chache */
 export const fetchGitData = ({
 	entity = "",
 	text = "",
@@ -85,7 +85,7 @@ export const fetchGitData = ({
 		}, setError);
 	}
 };
-/*set initial intities*/
+/** Set initial intities*/
 export const initEntities = () => {
 	return reduxCatchAsync(async (dispatch) => {
 		dispatch(toggleLoading());

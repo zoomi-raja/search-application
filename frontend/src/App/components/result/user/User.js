@@ -32,7 +32,7 @@ const User = ({ avatar_url, html_url, login }) => {
 	);
 };
 
-/**Required props for component */
+/** Required props for component */
 User.propTypes = {
 	avatar_url: PropTypes.string,
 	html_url: PropTypes.string.isRequired,

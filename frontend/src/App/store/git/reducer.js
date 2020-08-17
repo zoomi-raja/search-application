@@ -66,7 +66,7 @@ const gitReducer = (state = initialState, action) => {
 				...initialState,
 			};
 
-		/* state responsible for updating indexer againts entity and text searched*/
+		/** State responsible for updating indexer againts entity and text searched*/
 		case actionTypes.FETCHED_DATA:
 			if (
 				//aditional condition to compensate infinite scroll not properly handled can be improved
