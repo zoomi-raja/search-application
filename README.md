@@ -1,6 +1,6 @@
 # Search Application
 
-## Assesment Test solution
+## Assessment Test solution
 
 Each entity of application lies in its seprate codebase
 
