@@ -1,6 +1,6 @@
 # Search Application
 
-## Assesmt Test solution
+## Assesment Test solution
 
 Each entity of application lies in its seprate codebase
 
@@ -95,10 +95,11 @@ In the project directory, you can run:
 
 ### `docker-compose up`
 
-**`note`** rename .env.example to .env<br />
-will run application inside docker container
+this will run application inside docker container
 
-`following required environemtn variable for docker`
+**`note`** rename .env.example to .env<br />
+
+`following are the required environment variable for docker`
 
 ```
 API_PORT=8010
