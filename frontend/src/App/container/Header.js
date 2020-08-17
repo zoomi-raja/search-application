@@ -13,7 +13,7 @@ import Select from "../components/ui/select/Select";
 import { connect } from "react-redux";
 import * as actions from "../store/git/actions";
 
-import React, { useEffect, createRef, useCallback } from "react";
+import React, { useRef, useEffect, createRef, useCallback } from "react";
 
 const Header = ({
 	data,
@@ -29,6 +29,8 @@ const Header = ({
 }) => {
 	/** text refrence to keep seprate text value of store and for input field */
 	const textRef = createRef("");
+	const funcStack = useRef([]);
+
 	//callbacks
 	useEffect(() => {
 		if (entities.length <= 0) {
@@ -36,8 +38,24 @@ const Header = ({
 		}
 	}, [initEntities, entities]);
 
+	//run every time on rerender to avoid race condtion between local cache and api response
+	useEffect(() => {
+		if (funcStack.current.length > 0) {
+			let lastString = funcStack.current.pop();
+			funcStack.current = [];
+			if (lastString !== presrvText) {
+				debounceFn({
+					text: lastString,
+					entity,
+					indexer,
+					presrvText,
+					textChange: true,
+				});
+			}
+		}
+	}, [presrvText]);
 	/** this function is called from lodash depounch function and setting value in store */
-	const handleDataFetch = ({
+	const handleDataFetch = async ({
 		indexer = {},
 		text = "",
 		entity = "",
@@ -58,13 +76,18 @@ const Header = ({
 
 	/** handling of text change through debounce */
 	const onTextChange = () => {
-		debounceFn({
-			text: textRef.current.value,
-			entity,
-			indexer,
-			presrvText,
-			textChange: true,
-		});
+		if (!loading) {
+			debounceFn({
+				text: textRef.current.value,
+				entity,
+				indexer,
+				presrvText,
+				textChange: true,
+			});
+		} else {
+			//maintain stack
+			funcStack.current.push(textRef.current.value);
+		}
 	};
 	/** entity change is slow event so we can go without debounce */
 	const onEntityChange = (event) => {

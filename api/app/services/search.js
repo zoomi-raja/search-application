@@ -115,7 +115,12 @@ exports.getAllResults = async ({ entity, text, page }) => {
 	page = Number.isInteger(parseInt(page)) ? page : 1;
 
 	let q = prepareQueryParam(entity);
-	let gitApi = `${apiBastPath}/search/${entity}?q=${text}+${q}&page=${page}`;
+	let gitApi = `${apiBastPath}/search/${entity}?q=${encodeURI(
+		text
+	)}+${q}&page=${page}`;
+	if (process.env.NODE_ENV === "development") {
+		console.log(gitApi);
+	}
 	let rawResp = await fetch(gitApi);
 	let result = await rawResp.json();
 	if (result.items) {
