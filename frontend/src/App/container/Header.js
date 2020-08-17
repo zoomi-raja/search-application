@@ -6,6 +6,7 @@ import debounce from "lodash/debounce";
 
 //import components
 import Head from "../components/head/Head";
+import { useHistory } from "react-router-dom";
 import Input from "../components/ui/input/Input";
 import Select from "../components/ui/select/Select";
 
@@ -29,6 +30,7 @@ const Header = ({
 }) => {
 	/** text refrence to keep seprate text value of store and for input field */
 	const textRef = createRef("");
+	const history = useHistory();
 	const funcStack = useRef([]);
 
 	//callbacks
@@ -37,6 +39,10 @@ const Header = ({
 			initEntities();
 		}
 	}, [initEntities, entities]);
+	//set current url
+	useEffect(() => {
+		history.push(`/${entity}`);
+	}, [entity, history]);
 
 	//run every time on rerender to avoid race condtion between local cache and api response
 	useEffect(() => {
