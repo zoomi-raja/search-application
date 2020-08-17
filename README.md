@@ -87,6 +87,8 @@ which will spin three containers
 - frontend
 - redis
 
+**`Note.!`** Documentation for API available on API server with the url `api-docs/`
+
 ## Available Scripts
 
 In the project directory, you can run:
