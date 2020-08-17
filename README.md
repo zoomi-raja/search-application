@@ -74,9 +74,9 @@ frontend
 
 - debounce is used with [useCallBack](https://github.com/zoomi-raja/tradeling/blob/master/frontend/src/App/container/Header.js#L57) hook to avoid making request each time. useCallBack will help to keep the refrence of function which is inilized when trigering the debounce. otherwise on each rerender it will reinitilize the variable [debounceFn](https://github.com/zoomi-raja/tradeling/blob/master/frontend/src/App/container/Header.js#L57)
 
-- client size cache is [maintained](https://github.com/zoomi-raja/tradeling/blob/master/frontend/src/App/store/git/reducer.js#L70) by keeping object in the form indexer.entity.searchedText and additional added infinite scroll page number is not handled properly as it was out of scope so didnt want to spend much time on that but as of now if page number is greater then one appening in the array against that particular entity-text combination
+- client size cache is [maintained](https://github.com/zoomi-raja/tradeling/blob/master/frontend/src/App/store/git/reducer.js#L70) by keeping object in the form indexer.entity.searchedText and additional added infinite scroll page number is not handled properly as it was out of scope so didnt want to spend much time on that but as of now if page number is greater then one appending in the array against that particular entity-text combination
 
-- containers ment to control the flow of components included so its easy to debug if each component is declaring its function then its little harder to debug. delaration in one main component which including other component i try to put in container.
+- containers ment to control the flow of components included in it so its easy to debug. if each component is declare its function then its little harder to debug. component which declares function for other component is considered as container.
 
 **`Architecture Solution`**
 
