@@ -68,7 +68,7 @@ frontend
 
 - CSS Modules are used to keep css properties unique to that partiular component
 
-- Smaller component event put Input on its seprate component so we can control it well and as it have its own css with out main component will not have to cary the css code for the input/select field.
+- Smaller component even Input has its own seprate component so we can control it well and as it have its own css parent of this component will not have to cary the css code for the input/select field.
 
 - Used [SVG](https://css-tricks.com/svg-sprites-use-better-icon-fonts/) icons as only small icons were required in application and it can scale well with device screen size combined with rem.
 
@@ -89,7 +89,7 @@ which will spin three containers
 
 **`Note.!`** Documentation for API available on API server with the url `api-docs/`
 
-## Available Scripts
+## Available Scripts and Installation
 
 In the project directory, you can run:
 
