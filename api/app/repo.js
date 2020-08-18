@@ -6,16 +6,14 @@ const expiryTime = 2 * 60 * 60;
  * object also need cache it can implement getAllResults method to fully
  * utilitze this function */
 
-exports.getResults = async (service, { body }) => {
+exports.getResults = async ({ service, indexKey = null }) => {
 	try {
-		const { entity, text, page } = body;
-		let indexKey = `tradeling-search:${entity}:${text}:${page}`;
 		let cacheBloob = await radisObj.get(indexKey);
 		if (cacheBloob) {
 			return JSON.parse(cacheBloob);
 		} else {
 			//get service data and put it in cache
-			const result = await service.getAllResults(body);
+			const result = await service();
 			if (result.items && result.items.length > 0) {
 				await radisObj.setex(indexKey, expiryTime, JSON.stringify(result));
 			}

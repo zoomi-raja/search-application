@@ -2,7 +2,7 @@ const AppError = require("../utils/error");
 
 const HttpStatus = require("http-status-codes");
 const { catchAsync } = require("../utils/utils");
-const searchService = require("../services/search");
+const { getAllResults } = require("../services/search");
 const { getGitEntities } = require("../services/entities");
 const { getResults } = require("../repo");
 
@@ -48,9 +48,18 @@ const search = catchAsync(async (req, res, next) => {
 	if (!status) {
 		next(new AppError(message, HttpStatus.UNPROCESSABLE_ENTITY));
 	} else {
-		const { entity } = req.body;
+		const { entity, text, page } = req.body;
 		//use repo to decide source of data cache/http request
-		let result = await getResults(searchService, req);
+
+		let indexKey = `tradeling-search:${entity}:${text}:${page}`;
+
+		let result = await getResults({
+			service: () => {
+				//lexical scope in action
+				return getAllResults({ entity, text, page });
+			},
+			indexKey,
+		});
 		//result response of api is very dynamic if items are there that means it went well
 		if (result.hasOwnProperty("items")) {
 			const response = {
