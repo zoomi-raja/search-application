@@ -41,7 +41,7 @@ api
 
 - **Cache** api should not have public access but as the scope of the search application is small so didn't put any authentication.
 
-- (Error)(https://github.com/zoomi-raja/tradeling/blob/master/api/app/utils/error.js) class kept simple can hold on string not object. This will help us to sustain our status code for the final response.
+- [Error](https://github.com/zoomi-raja/tradeling/blob/master/api/app/utils/error.js) class kept simple can hold on string not object. This will help us to sustain our status code for the final response.
 
 - Total two tests. mocked result for fetch module is used to avoid orignal api requests to GIT server from automated script, it will prevent any delay or extra time/resource being utilized by tests.
 
