@@ -11,6 +11,7 @@ const initialState = {
 };
 
 const gitReducer = (state = initialState, action) => {
+  console.log(action.type);
   switch (action.type) {
     case actionTypes.LOADING:
       return {
@@ -26,6 +27,11 @@ const gitReducer = (state = initialState, action) => {
           (state.indexer[action.entity] &&
             state.indexer[action.entity][state.text]) ||
           [],
+      };
+    case actionTypes.SET_TEXT:
+      return {
+        ...state,
+        text: action.text,
       };
 
     case actionTypes.SET_ENTITIES:

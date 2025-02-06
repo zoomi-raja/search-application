@@ -15,6 +15,11 @@ export const setEntity = (entity) => ({
   entity,
 });
 
+export const setText = (text) => ({
+  type: actionTypes.SET_TEXT,
+  text,
+});
+
 /** Array of entites available in our system fetched from api */
 export const setEntities = ({ entity, entities }) => ({
   type: actionTypes.SET_ENTITIES,

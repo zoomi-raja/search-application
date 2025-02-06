@@ -14,7 +14,7 @@ import Select from "../components/ui/select/Select";
 import { connect } from "react-redux";
 import * as actions from "../store/git/actions";
 
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback } from "react";
 
 const Header = ({
   data,
@@ -24,13 +24,12 @@ const Header = ({
   loading,
   getData,
   setEntity,
+  setText,
   initEntities,
   clearData,
 }) => {
   /** text refrence to keep seprate text value of store and for input field */
   const history = useHistory();
-  const [searchString, setSearchString] = useState(text);
-
   //on initial render if entities are empty fetch entities
   useEffect(() => {
     if (entities.length <= 0) {
@@ -42,7 +41,6 @@ const Header = ({
     if (text.length > 3 && entity !== "") {
       getData({ entity, text });
     } else if (text.length <= 0) {
-      //only empty string from store and maintain input value on field
       clearData();
     }
   };
@@ -51,10 +49,13 @@ const Header = ({
   /** handling of text change through debounce */
   useEffect(() => {
     debounceFn({
-      text: searchString,
+      text,
       entity,
     });
-  }, [searchString, debounceFn, entity]);
+    return () => {
+      debounceFn.cancel();
+    };
+  }, [text, debounceFn, entity]);
 
   /** entity change is slow event so we can go without debounce */
   const onEntityChange = (event) => {
@@ -65,7 +66,7 @@ const Header = ({
   /** move search box top left when store(redux) has data */
   let classNames =
     data.length > 0 ? `${classes.header} ${classes.moveLeft}` : classes.header;
-
+  console.log(text);
   return (
     <div className={classNames}>
       <Head />
@@ -77,8 +78,8 @@ const Header = ({
       >
         <Input
           type="text"
-          value={searchString}
-          onChanged={(e) => setSearchString(e.target.value)}
+          value={text}
+          onChanged={(e) => setText(e.target.value)}
           placeholder="start typing to search.."
         />
         <Select
@@ -127,6 +128,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setEntity: (entity) => {
       dispatch(actions.setEntity(entity));
+    },
+    setText: (text) => {
+      dispatch(actions.setText(text));
     },
   };
 };
