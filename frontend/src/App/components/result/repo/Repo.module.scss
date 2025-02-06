@@ -1,40 +1,43 @@
 .repo {
-	padding: 2rem;
-	&Head {
-		display: flex;
-		align-items: center;
-		&Img {
-			width: 5rem;
-			height: 5rem;
-			flex-shrink: 0;
-			img {
-				border-radius: 50%;
-			}
-		}
-		&Info {
-			margin-left: 1.2rem;
-			.repoUser {
-				font-size: 1.6rem;
-			}
-		}
-	}
-	&Body {
-		background-color: var(--main-color);
-		padding: 1rem 2rem 1rem;
-		margin-top: 1rem;
-		font-size: 1.6rem;
-		&Stats {
-			margin-top: 1rem;
-			display: flex;
-			flex-wrap: wrap;
-			.statItem {
-				display: flex;
-				align-items: center;
-				flex-basis: 50%;
-				svg {
-					margin-right: 1rem;
-				}
-			}
-		}
-	}
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  &Head {
+    display: flex;
+    align-items: center;
+    &Img {
+      width: 5rem;
+      height: 5rem;
+      flex-shrink: 0;
+      img {
+        border-radius: 50%;
+      }
+    }
+    &Info {
+      margin-left: 1.2rem;
+      .repoUser {
+        font-size: 1.6rem;
+      }
+    }
+  }
+  &Body {
+    background-color: var(--main-color);
+    padding: 1rem 2rem 1rem;
+    margin-top: 1rem;
+    font-size: 1.6rem;
+    &Stats {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      .statItem {
+        display: flex;
+        align-items: center;
+        flex-basis: 50%;
+        svg {
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
 }
